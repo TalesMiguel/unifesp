@@ -1,0 +1,126 @@
+// Nome: Tales Miguel Machado Pereira
+// RA: 140247
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+typedef struct reg {
+   int chave;
+   int conteudo;
+   struct reg *esq, *dir; 
+} noh; // nó
+
+// Recebe uma árvore de busca r e
+// um número k. Devolve um nó
+// cuja chave é k; se tal nó não existe,
+// devolve NULL.
+
+noh *
+busca (noh * r, int k) {
+    if (r == NULL || r->chave == k)
+       return r;
+    if (r->chave > k)
+       return busca (r->esq, k);
+    else
+       return busca (r->dir, k);
+}
+
+// A função recebe uma árvore de busca r
+// e uma folha avulsa novo e insere a folha
+// na árvore de modo que a árvore continue
+// sendo de busca. A função devolve a raiz 
+// da árvore resultante.
+
+// arvore 
+insere (noh * r, noh *novo) {  
+    if (r == NULL) return novo;
+    if (r->chave > novo->chave) 
+       r->esq = insere (r->esq, novo);
+    else 
+       r->dir = insere (r->dir, novo);
+    return r;
+}
+
+// Recebe uma árvore não vazia r.
+// Remove a raiz da árvore e rearranja
+// a árvore de modo que ela continue sendo
+// de busca. Devolve o endereço da
+// nova raiz.
+
+// arvore 
+removeraiz (noh * r) {  
+    noh *p, *q;
+    if (r->esq == NULL) {
+       q = r->dir;
+       free (r);
+       return q;
+    }
+    p = r; q = r->esq;
+    while (q->dir != NULL) {
+       p = q; q = q->dir;
+    }
+    // q é nó anterior a r na ordem e-r-d
+    // p é pai de q
+    if (p != r) {
+       p->dir = q->esq;
+       q->esq = r->esq;
+    }
+    q->dir = r->dir;
+    free (r);
+    return q;
+}
+
+int binarySearch(int arr[], int l, int r, int x)
+{
+    if (r >= l) {
+        int mid = l + (r - l) / 2;
+ 
+        // If the element is present at the middle
+        // itself
+        if (arr[mid] == x)
+            return mid;
+ 
+        // If element is smaller than mid, then
+        // it can only be present in left subarray
+        if (arr[mid] > x)
+            return binarySearch(arr, l, mid - 1, x);
+ 
+        // Else the element can only be present
+        // in right subarray
+        return binarySearch(arr, mid + 1, r, x);
+    }
+ 
+    // We reach here when element is not
+    // present in array
+    return -1;
+}
+
+
+int main(){
+    int arvore, pesquisa1, pesquisa2, i, N, K;
+    int* array;
+
+    do{
+        scanf("%d", &arvore);
+       
+    }while(arvore>0);
+    
+    array = malloc(arvore*sizeof(int)); // vetor iniciado dinamicamente em ref a N
+
+    do{
+        scanf("%d", &pesquisa1);
+    }while(pesquisa1>0);
+
+    do{
+        scanf("%d", &pesquisa2);
+    }while(pesquisa2>0);
+
+    
+    for(i=0; i<N; i++){
+        scanf("%d", &array[i]);
+    }
+
+    binarysearch(array, 0, N-1, K);
+    return 0;  
+}
